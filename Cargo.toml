@@ -16,7 +16,7 @@ license = "MPL-2.0"
 maintenance = { status = "actively-developed" }
 
 [lib]
-name = "charts"
+name = "barcode"
 
 [features]
 web = ["wasm-bindgen", "wasm-bindgen-futures", "wasm-logger", "gloo", "js-sys", "wasm-bindgen-test", "web-sys", "ux-animate/web"]
