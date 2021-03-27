@@ -1,0 +1,73 @@
+[package]
+name = "ux-barcode"
+version = "0.1.1"
+authors = ["Victor Dudochkin <dudochkin.victor@gmail.com>", "Maksim Makarov <pr0n1x@yandex.ru>"]
+readme = "README.md"
+homepage = "https://angular-rust.github.io/ux-charts"
+repository = "https://github.com/angular-rust/ux-charts"
+documentation = "https://docs.rs/ux-charts"
+description = "Barcode for Angular Rust"
+keywords = ["webassembly", "gtk", "cairo", "canvas", "barcode"]
+categories = ["multimedia", "wasm", "web-programming", "gui", "visualization"]
+edition = "2018"
+license = "MPL-2.0"
+
+[badges]
+maintenance = { status = "actively-developed" }
+
+[lib]
+name = "charts"
+
+[features]
+web = ["wasm-bindgen", "wasm-bindgen-futures", "wasm-logger", "gloo", "js-sys", "wasm-bindgen-test", "web-sys", "ux-animate/web"]
+cairo = ["cairo-rs", "ux-animate/cairo"]
+
+[dependencies]
+log = "0.4"
+lazy_static = "1.4"
+ux-dataflow = "0.1"
+ux-animate = { version = "0.1", default-features = false }
+cairo-rs = { version = "0.9", optional = true }
+
+wasm-bindgen = { version = "0.2", optional = true }
+wasm-bindgen-futures = { version = "0.4", optional = true }
+wasm-logger = { version = "0.2", optional = true }
+gloo = { version = "0.2", optional = true }
+js-sys = { version = "0.3", optional = true }
+wasm-bindgen-test = { version = "0.3", optional = true }
+
+[dependencies.ux-primitives]
+version = "0.1"
+features = [ "canvas" ]
+
+[dependencies.web-sys]
+version = "0.3"
+optional = true
+features = [
+  "KeyboardEvent",
+  "ValidityState",
+  "CustomEvent",
+  "Node",
+  "Element",
+  "HtmlElement",
+  "Window",
+  "Document",
+  "CanvasRenderingContext2d",
+  "TextMetrics",
+  "HtmlCanvasElement",
+  "HtmlImageElement",
+  "SvgImageElement",
+  "HtmlVideoElement",
+  "ImageBitmap",
+  "CanvasWindingRule",
+  "Path2d",
+  "CanvasPattern",
+  "CanvasGradient",
+  "HitRegionOptions",
+  "ImageData",
+  "DomMatrix"
+]
+
+[dev-dependencies]
+
+[build-dependencies]
