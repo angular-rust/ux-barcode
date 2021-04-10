@@ -1,10 +1,12 @@
 name: Test coverage
 
-on:
-  push:
-    branches:
-      - main
-  pull_request:
+#on:
+#  push:
+#    branches:
+#      - main
+#  pull_request:
+
+on: [push, pull_request]
 
 env:
   CARGO_TERM_COLOR: always
