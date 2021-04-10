@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
 
       - name: Install Rust
         uses: actions-rs/toolchain@v1
@@ -44,8 +44,6 @@ jobs:
       - name: Generate coverage
         id: coverage
         uses: actions-rs/grcov@v0.1
-        with:
-          config: configs/grcov.config.yml
 
       - name: Upload to codecov.io
         uses: codecov/codecov-action@v1
