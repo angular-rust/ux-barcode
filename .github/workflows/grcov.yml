@@ -33,8 +33,10 @@ jobs:
           crate: grcov
           use-tool-cache: true
 
-      - name: Restore cache
-        uses: Swatinem/rust-cache@v1
+      - name: Clean
+        uses: actions-rs/cargo@v1
+        with:
+          command: clean
 
       - name: Run tests
         run: cargo test --all --all-features
