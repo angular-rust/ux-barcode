@@ -6,5 +6,4 @@ coverage:
   status:
     project:
       default:
-        # Don't fail on coverage, only show
         informational: true
