@@ -1,14 +1,14 @@
 [package]
 name = "ux-barcode"
 version = "0.1.1"
-authors = ["Victor Dudochkin <dudochkin.victor@gmail.com>", "Maksim Makarov <pr0n1x@yandex.ru>"]
+authors = ["Victor Dudochkin <dudochkin.victor@gmail.com>"]
 readme = "README.md"
 homepage = "https://angular-rust.github.io/ux-barcode"
 repository = "https://github.com/angular-rust/ux-barcode"
 documentation = "https://docs.rs/ux-barcode"
-description = "Barcode for Angular Rust"
-keywords = ["webassembly", "gtk", "cairo", "canvas", "barcode"]
-categories = ["multimedia", "wasm", "web-programming", "gui", "visualization"]
+description = "High-quality Barcode and QR Code generator library for Angular Rust"
+keywords = ["qr-code", "qr", "barcode", "encoder", "image"]
+categories = ["command-line-utilities", "encoding", "multimedia::images", "visualization"]
 edition = "2018"
 license = "MPL-2.0"
 
@@ -19,14 +19,15 @@ maintenance = { status = "actively-developed" }
 name = "barcode"
 
 [features]
-web = ["wasm-bindgen", "wasm-bindgen-futures", "wasm-logger", "gloo", "js-sys", "wasm-bindgen-test", "web-sys", "ux-animate/web"]
-cairo = ["cairo-rs", "ux-animate/cairo"]
+web = ["wasm-bindgen", "wasm-bindgen-futures", "wasm-logger", "gloo", "js-sys", "wasm-bindgen-test", "web-sys"]
+cairo = ["cairo-rs"]
 
 [dependencies]
 log = "0.4"
 lazy_static = "1.4"
+html-escape = "0.2"
 ux-dataflow = "0.1"
-ux-animate = { version = "0.1", default-features = false }
+ux-animate = "0.1"
 cairo-rs = { version = "0.9", optional = true }
 
 wasm-bindgen = { version = "0.2", optional = true }
@@ -69,5 +70,12 @@ features = [
 ]
 
 [dev-dependencies]
+slash-formatter = "3"
+tiny-skia = "0.5"
+resvg = "0.14.0"
+usvg = "0.14.0"
 
 [build-dependencies]
+
+[package.metadata.docs.rs]
+all-features = true
