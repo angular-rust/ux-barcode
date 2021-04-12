@@ -1,3 +1,9 @@
+#![allow(
+    clippy::bind_instead_of_map,
+    clippy::manual_range_contains,
+    clippy::comparison_chain,
+    clippy::upper_case_acronyms
+)]
 //! # Barcoders
 //! Barcoders allows you to encode valid data for a chosen barcode symbology into a ```Vec<u8>``` representation
 //! of the underlying binary structure. From here, you can take advantage one of optional builtin generators
@@ -177,28 +183,29 @@
 //! use barcode::QrCodeEcc;
 //! use barcode::QrSegment;
 //! ```
-//!
-//! Simple operation:
-//!
-//! ```
-//! let qr = QrCode::encode_text("Hello, world!",
-//!     QrCodeEcc::Medium).unwrap();
-//! let svg = qr.to_svg_string(4);
-//! ```
-//!
-//! Manual operation:
-//!
-//! ```
-//! let chrs: Vec<char> = "3141592653589793238462643383".chars().collect();
-//! let segs = QrSegment::make_segments(&chrs);
-//! let qr = QrCode::encode_segments_advanced(
-//!     &segs, QrCodeEcc::High, 5, 5, Some(Mask::new(2)), false).unwrap();
-//! for y in 0 .. qr.size() {
-//!     for x in 0 .. qr.size() {
-//!         (... paint qr.get_module(x, y) ...)
-//!     }
-//! }
-//! ```
+
+//
+// Simple operation:
+//
+// ```
+// let qr = QrCode::encode_text("Hello, world!",
+//     QrCodeEcc::Medium).unwrap();
+// let svg = qr.to_svg_string(4);
+// ```
+//
+// Manual operation:
+//
+// ```
+// let chrs: Vec<char> = "3141592653589793238462643383".chars().collect();
+// let segs = QrSegment::make_segments(&chrs);
+// let qr = QrCode::encode_segments_advanced(
+//     &segs, QrCodeEcc::High, 5, 5, Some(Mask::new(2)), false).unwrap();
+// for y in 0 .. qr.size() {
+//     for x in 0 .. qr.size() {
+//         (... paint qr.get_module(x, y) ...)
+//     }
+// }
+// ```
 
 // #![warn(missing_docs,
 // 	missing_debug_implementations, missing_copy_implementations,

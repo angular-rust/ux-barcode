@@ -1,6 +1,8 @@
 # ux-barcode
 
-![Test status badge](https://img.shields.io/github/workflow/status/angular-rust/ux-barcode/tests?label=tests&logo=github&style=flat-square)
+![Test status badge](https://img.shields.io/github/workflow/status/angular-rust/ux-barcode/Tests?label=tests&logo=github&style=flat-square)
+
+
 ![Loc](https://img.shields.io/tokei/lines/github/angular-rust/ux-barcode?style=flat-square)
 [![codecov][codecov-badge]][codecov-url]
 
