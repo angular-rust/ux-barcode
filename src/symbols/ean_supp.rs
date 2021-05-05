@@ -38,28 +38,28 @@ const EAN2_PARITY: [[usize; 5]; 4] = [
 
 /// The Supplemental EAN barcode type.
 #[derive(Debug)]
-pub enum EANSUPP {
+pub enum Eansupp {
     /// EAN-2 supplemental barcode type.
     EAN2(Vec<u8>),
     /// EAN-5 supplemental barcode type.
     EAN5(Vec<u8>),
 }
 
-impl EANSUPP {
+impl Eansupp {
     /// Creates a new barcode.
     /// Returns Result<EANSUPP, Error> indicating parse success.
     /// Either a EAN2 or EAN5 variant will be returned depending on
     /// the length of `data`.
-    pub fn new<T: AsRef<str>>(data: T) -> Result<EANSUPP> {
-        EANSUPP::parse(data.as_ref()).and_then(|d| {
+    pub fn new<T: AsRef<str>>(data: T) -> Result<Eansupp> {
+        Eansupp::parse(data.as_ref()).and_then(|d| {
             let digits: Vec<u8> = d
                 .chars()
                 .map(|c| c.to_digit(10).expect("Unknown character") as u8)
                 .collect();
 
             match digits.len() {
-                2 => Ok(EANSUPP::EAN2(digits)),
-                5 => Ok(EANSUPP::EAN5(digits)),
+                2 => Ok(Eansupp::EAN2(digits)),
+                5 => Ok(Eansupp::EAN5(digits)),
                 _ => Err(Error::Length),
             }
         })
@@ -67,7 +67,7 @@ impl EANSUPP {
 
     fn raw_data(&self) -> &[u8] {
         match *self {
-            EANSUPP::EAN2(ref d) | EANSUPP::EAN5(ref d) => &d[..],
+            Eansupp::EAN2(ref d) | Eansupp::EAN5(ref d) => &d[..],
         }
     }
 
@@ -97,11 +97,11 @@ impl EANSUPP {
 
     fn parity(&self) -> [usize; 5] {
         match *self {
-            EANSUPP::EAN2(ref d) => {
+            Eansupp::EAN2(ref d) => {
                 let modulo = ((d[0] * 10) + d[1]) % 4;
                 EAN2_PARITY[modulo as usize]
             }
-            EANSUPP::EAN5(ref _d) => {
+            Eansupp::EAN5(ref _d) => {
                 let check = self.checksum_digit() as usize;
                 EAN5_PARITY[check]
             }
@@ -136,7 +136,7 @@ impl EANSUPP {
     }
 }
 
-impl Parse for EANSUPP {
+impl Parse for Eansupp {
     /// Returns the valid length of data acceptable in this type of barcode.
     fn valid_len() -> Range<u32> {
         2..5
@@ -161,42 +161,42 @@ mod tests {
 
     #[test]
     fn new_ean2() {
-        let ean2 = EANSUPP::new("12");
+        let ean2 = Eansupp::new("12");
 
         assert!(ean2.is_ok());
     }
 
     #[test]
     fn new_ean5() {
-        let ean5 = EANSUPP::new("12345");
+        let ean5 = Eansupp::new("12345");
 
         assert!(ean5.is_ok());
     }
 
     #[test]
     fn invalid_data_ean2() {
-        let ean2 = EANSUPP::new("AT");
+        let ean2 = Eansupp::new("AT");
 
         assert_eq!(ean2.err().unwrap(), Error::Character);
     }
 
     #[test]
     fn invalid_len_ean2() {
-        let ean2 = EANSUPP::new("123");
+        let ean2 = Eansupp::new("123");
 
         assert_eq!(ean2.err().unwrap(), Error::Length);
     }
 
     #[test]
     fn ean2_encode() {
-        let ean21 = EANSUPP::new("34").unwrap();
+        let ean21 = Eansupp::new("34").unwrap();
 
         assert_eq!(collapse_vec(ean21.encode()), "10110100001010100011");
     }
 
     #[test]
     fn ean5_encode() {
-        let ean51 = EANSUPP::new("51234").unwrap();
+        let ean51 = Eansupp::new("51234").unwrap();
 
         assert_eq!(
             collapse_vec(ean51.encode()),

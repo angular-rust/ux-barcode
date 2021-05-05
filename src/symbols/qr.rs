@@ -1,3 +1,4 @@
+use std::cmp::Ordering;
 /// A QR Code symbol, which is a type of two-dimension barcode.
 ///
 /// Invented by Denso Wave and described in the ISO/IEC 18004 standard.
@@ -569,10 +570,14 @@ impl QrCode {
             for x in 0..size {
                 if self.module(x, y) == runcolor {
                     runx += 1;
-                    if runx == 5 {
-                        result += PENALTY_N1;
-                    } else if runx > 5 {
-                        result += 1;
+                    match runx.cmp(&5) {
+                        Ordering::Equal => {
+                            result += PENALTY_N1;
+                        }
+                        Ordering::Greater => {
+                            result += 1;
+                        }
+                        _ => {}
                     }
                 } else {
                     runhistory.add_history(runx);
@@ -593,10 +598,14 @@ impl QrCode {
             for y in 0..size {
                 if self.module(x, y) == runcolor {
                     runy += 1;
-                    if runy == 5 {
-                        result += PENALTY_N1;
-                    } else if runy > 5 {
-                        result += 1;
+                    match runy.cmp(&5) {
+                        Ordering::Equal => {
+                            result += PENALTY_N1;
+                        }
+                        Ordering::Greater => {
+                            result += 1;
+                        }
+                        _=>{}
                     }
                 } else {
                     runhistory.add_history(runy);
@@ -670,7 +679,7 @@ impl QrCode {
                 result -= 36;
             }
         }
-        assert!(208 <= result && result <= 29648);
+        assert!((208..=29648).contains(&result));
         result
     }
 
@@ -691,7 +700,7 @@ impl QrCode {
     // Returns a Reed-Solomon ECC generator polynomial for the given degree. This could be
     // implemented as a lookup table over all possible parameter values, instead of as an algorithm.
     fn reed_solomon_compute_divisor(degree: usize) -> Vec<u8> {
-        assert!(1 <= degree && degree <= 255, "Degree out of range");
+        assert!((1..=255).contains(&degree), "Degree out of range");
         // Polynomial coefficients are stored from highest to lowest power, excluding the leading term which is always 1.
         // For example the polynomial x^3 + 255x^2 + 8x + 93 is stored as the uint8 array [255, 8, 93].
         let mut result = vec![0u8; degree - 1];
@@ -934,7 +943,7 @@ impl QrSegment {
         let mut accumcount: u8 = 0;
         for &c in text {
             assert!(
-                '0' <= c && c <= '9',
+                ('0'..='9').contains(&c),
                 "String contains non-numeric characters"
             );
             accumdata = accumdata * 10 + (u32::from(c) - u32::from('0'));
@@ -1079,7 +1088,7 @@ impl QrSegment {
     // Tests whether the given string can be encoded as a segment in numeric mode.
     // A string is encodable iff each character is in the range 0 to 9.
     fn is_numeric(text: &[char]) -> bool {
-        text.iter().all(|&c| '0' <= c && c <= '9')
+        text.iter().all(|&c| ('0'..='9').contains(&c))
     }
 }
 

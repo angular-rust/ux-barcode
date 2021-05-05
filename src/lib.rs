@@ -1,9 +1,3 @@
-#![allow(
-    clippy::bind_instead_of_map,
-    clippy::manual_range_contains,
-    clippy::comparison_chain,
-    clippy::upper_case_acronyms
-)]
 //! # Barcoders
 //! Barcoders allows you to encode valid data for a chosen barcode symbology into a ```Vec<u8>``` representation
 //! of the underlying binary structure. From here, you can take advantage one of optional builtin generators

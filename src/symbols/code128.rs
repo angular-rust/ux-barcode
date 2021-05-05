@@ -274,7 +274,7 @@ impl Code128 {
             return Err(Error::Length);
         }
 
-        Code128::parse(data.chars().collect()).and_then(|u| Ok(Code128(u)))
+        Code128::parse(data.chars().collect()).map(Code128)
     }
 
     // Tokenizes and collects the data into the appropriate character-sets.

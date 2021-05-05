@@ -92,22 +92,22 @@ pub type Bookland = EAN13;
 
 /// The UPC-A barcode type.
 /// UPC-A are EAN-13 that start with a 0.
-pub type UPCA = EAN13;
+pub type Upca = EAN13;
 
 /// The JAN barcode type.
 /// JAN are EAN-13 that use number system 49.
-pub type JAN = EAN13;
+pub type Jan = EAN13;
 
 impl EAN13 {
     /// Creates a new barcode.
     /// Returns Result<EAN13, Error> indicating parse success.
     pub fn new<T: AsRef<str>>(data: T) -> Result<EAN13> {
-        EAN13::parse(data.as_ref()).and_then(|d| {
+        EAN13::parse(data.as_ref()).map(|d| {
             let digits = d
                 .chars()
                 .map(|c| c.to_digit(10).expect("Unknown character") as u8)
                 .collect();
-            Ok(EAN13(digits))
+            EAN13(digits)
         })
     }
 
@@ -235,8 +235,8 @@ mod tests {
 
     #[test]
     fn ean13_encode_as_upca() {
-        let ean131 = UPCA::new("012345612345").unwrap(); // Check digit: 8
-        let ean132 = UPCA::new("000118999561").unwrap(); // Check digit: 3
+        let ean131 = Upca::new("012345612345").unwrap(); // Check digit: 8
+        let ean132 = Upca::new("000118999561").unwrap(); // Check digit: 3
 
         assert_eq!(collapse_vec(ean131.encode()), "10100110010010011011110101000110110001010111101010110011011011001000010101110010011101001000101");
         assert_eq!(collapse_vec(ean132.encode()), "10100011010001101001100100110010110111000101101010111010011101001001110101000011001101000010101");
