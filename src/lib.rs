@@ -208,6 +208,8 @@
 // 	unstable_features,
 // 	unused_import_braces, unused_qualifications)]
 
+#![doc(html_logo_url = "https://dudochkin-victor.github.io/assets/ux-barcode/logo.svg")]
+
 #![cfg_attr(feature = "dev", allow(unstable_features))]
 #![cfg_attr(feature = "dev", feature(plugin))]
 #![cfg_attr(feature = "dev", plugin(clippy))]
